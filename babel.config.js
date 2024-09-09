@@ -14,6 +14,7 @@ module.exports = {
           '@styles': './src/styles',
           '@types': './src/types',
           '@utils': './src/utils',
+          '@components': './src/components'
         }
       }
     ],

@@ -15,7 +15,7 @@ GeoLocation.setRNConfiguration({
     locationProvider: 'auto'
 })
 const SplashScreen: FC = () => {
-    
+
     const { user, setUser } = useAuthStore();
 
     const tokenCheck = async () => {
@@ -23,7 +23,7 @@ const SplashScreen: FC = () => {
         const refreshToken = tokenStorage.getString('refreshToken');
 
         if (accessToken) {
-            
+
 
         }
 
@@ -42,7 +42,7 @@ const SplashScreen: FC = () => {
         }
         const timeOutId = setTimeout(fetchUserLocation, 1000);
         return () => clearTimeout(timeOutId);
-    },[])
+    }, [])
     return (
         <View style={styles.container} >
             <StatusBar

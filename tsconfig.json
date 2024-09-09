@@ -13,6 +13,7 @@
       "@styles/*":["styles/*"],
       "@types/*":["types/*"],
       "@utils/*":["utils/*"],
+      "@components/*":["components/*"]
     }
   }
 }
