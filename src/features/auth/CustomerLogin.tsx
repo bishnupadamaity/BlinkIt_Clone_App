@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, StyleSheet, Animated, Image, SafeAreaView } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, Animated, Image, SafeAreaView, Keyboard, Alert } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import {
   GestureHandlerRootView,
@@ -15,6 +15,7 @@ import CustomButton from '@components/ui/CustomButton';
 import useKeyboardOffSetHeight from '@utils/useKeyboardOffSetHeight';
 import { RFValue } from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient'
+import { customerLogin } from '@service/authService';
 
 const bottomColors = [...lightColors].reverse();
 const CustomerLogin = () => {
@@ -39,7 +40,7 @@ const CustomerLogin = () => {
         useNativeDriver: true,
       }).start();
     }
-  },[keyboardOffSetHeight])
+  }, [keyboardOffSetHeight])
   const handleGesture = ({ nativeEvent }: any) => {
     if (nativeEvent.state === State.END) {
       const { translationX, translationY } = nativeEvent;
@@ -58,8 +59,20 @@ const CustomerLogin = () => {
       }
     }
   };
-  const handleAuth = () => {
-    // setLoading(true);
+  const handleAuth = async () => {
+    Keyboard.dismiss();
+    setLoading(true);
+    try {
+      const result = await customerLogin(phoneNumber);
+      if (result)
+        resetAndNavigate('ProductDashboard');
+
+    } catch (error) {
+      Alert.alert("Login Failed");
+      console.log("Handle Auth Error : ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -72,7 +85,7 @@ const CustomerLogin = () => {
             keyboardDismissMode={'on-drag'}
             keyboardShouldPersistTaps={'handled'}
             contentContainerStyle={styles.subContainer}
-            style={{transform: [{translateY: animatedValue}]}}  
+            style={{ transform: [{ translateY: animatedValue }] }}
           >
             <LinearGradient colors={bottomColors} style={styles.gradient} />
             <View style={styles.content}>
