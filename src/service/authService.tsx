@@ -20,7 +20,7 @@ export const customerLogin = async (phone: string) => {
             // Timeout error
             Alert.alert("Request Timeout", "Please try after some time.");
         } else {
-            console.log("Login Error: ", error);
+            console.log("Customer Login Error: ", error);
         }
     }
 }
@@ -68,6 +68,6 @@ export const refetchUser = async(setUser:any) => {
         const response = await appAxios.get(`/user`);
         setUser(response.data.user);
     } catch (error) {
-        console.log("Login Error : ", error);
+        console.log("RefetchLogin Error : ", error);
     }
 }

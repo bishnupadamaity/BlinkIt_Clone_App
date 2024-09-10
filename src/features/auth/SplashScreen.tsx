@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import { View, StyleSheet, Image, StatusBar, Alert } from 'react-native'
 import GeoLocation from '@react-native-community/geolocation'
-import { screenHeight, screeWidth } from '@utils/Scaling'
+import { screenHeight, screenWidth } from '@utils/Scaling'
 import Logo from '@assets/images/splash_logo.jpeg'
 import { Colors } from '@utils/Constants'
 import { useAuthStore } from '@state/authStore'
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoImage: {
-        width: screeWidth * 0.7,
+        width: screenWidth * 0.7,
         height: screenHeight * 0.7,
         resizeMode: 'contain'
     }

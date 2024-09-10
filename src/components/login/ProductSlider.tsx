@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { FC, useMemo } from 'react'
 import { imageData } from '@utils/dummyData';
 import AutoScroll from '@homielab/react-native-auto-scroll'
-import { screeWidth } from '@utils/Scaling';
+import { screenWidth } from '@utils/Scaling';
 
 const ProductSlider = () => {
 
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     itemContainer: {
         marginBottom: 12,
         marginHorizontal: 10,
-        width: screeWidth * 0.26,
-        height: screeWidth * 0.26,
+        width: screenWidth * 0.26,
+        height: screenWidth * 0.26,
         backgroundColor: '#e9f7f8',
         justifyContent: 'center',
         alignItems: 'center',

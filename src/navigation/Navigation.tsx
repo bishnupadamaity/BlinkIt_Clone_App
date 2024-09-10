@@ -1,13 +1,12 @@
-import { View, Text } from 'react-native';
 import React, { FC } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import DeliveryDashboard from '@features/delivery/DeliveryDashboard';
+import ProductDashboard from '@features/dashboard/ProductDashboard';
 import { NavigationContainer } from '@react-navigation/native';
-import SplashScreen from '@features/auth/SplashScreen';
-import { navigationRef } from '@utils/NavigationUtils';
 import DeliveryLogin from '@features/auth/DeliveryLogin';
 import CustomerLogin from '@features/auth/CustomerLogin';
-import ProductDashboard from '@features/dashboard/ProductDashboard';
-import DeliveryDashboard from '@features/delivery/DeliveryDashboard';
+import SplashScreen from '@features/auth/SplashScreen';
+import { navigationRef } from '@utils/NavigationUtils';
 const Stack = createNativeStackNavigator();
 const Navigation: FC = () => {
   return (
