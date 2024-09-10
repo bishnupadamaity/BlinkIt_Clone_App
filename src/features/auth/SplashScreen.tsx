@@ -6,7 +6,9 @@ import Logo from '@assets/images/splash_logo.jpeg'
 import { Colors } from '@utils/Constants'
 import { useAuthStore } from '@state/authStore'
 import { tokenStorage } from '@state/storage'
-import { navigate } from '@utils/NavigationUtils'
+import { navigate, resetAndNavigate } from '@utils/NavigationUtils'
+import { jwtDecode } from 'jwt-decode'
+import { refetchUser, refresh_Token } from '@service/authService'
 
 GeoLocation.setRNConfiguration({
     skipPermissionRequests: false,
@@ -14,17 +16,48 @@ GeoLocation.setRNConfiguration({
     enableBackgroundLocationUpdates: true,
     locationProvider: 'auto'
 })
+
+interface DecodedToken {
+    exp: number;
+}
 const SplashScreen: FC = () => {
 
     const { user, setUser } = useAuthStore();
 
     const tokenCheck = async () => {
-        const accessToken = tokenStorage.getString('accessToken');
-        const refreshToken = tokenStorage.getString('refreshToken');
+        const accessToken = tokenStorage.getString('accessToken') as string;
+        const refreshToken = tokenStorage.getString('refreshToken') as string;
 
         if (accessToken) {
 
+            const decodedAccessToken = jwtDecode<DecodedToken>(accessToken);
+            const decodedRefreshToken = jwtDecode<DecodedToken>(refreshToken);
 
+            const currentTime = Date.now() / 1000;
+
+            if (decodedRefreshToken?.exp < currentTime) {
+                resetAndNavigate('CustomerLogin');
+                Alert.alert("Session Expired", "Please login again.");
+                return false;
+            }
+            if (decodedAccessToken?.exp > currentTime) {
+                try {
+                    refresh_Token();
+                    await refetchUser(setUser);
+
+                } catch (error) {
+                    console.log("Access Token Error: ", error);
+                    Alert.alert("Error", "There is an error refreshing accessToken");
+                }
+            }
+
+            if (user?.role === 'Customer') {
+                resetAndNavigate('ProductDashboard');
+            } else {
+                resetAndNavigate('DeliveryDashboard');
+            }
+
+            return true;
         }
 
         navigate('CustomerLogin');
